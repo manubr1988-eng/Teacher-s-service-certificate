@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="kn">
+<head>
+<meta charset="UTF-8">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+<style>
+  body { font-family: 'Arial', sans-serif; }
+  .no-print { margin: 20px; padding: 20px; background: #f0f0f0; border: 1px solid #ccc; }
+  .creator-name { font-size: 20px; font-weight: bold; color: #333; margin-bottom: 15px; border-bottom: 2px solid #ccc; padding-bottom: 5px; }
+  input { width: 100%; padding: 10px; margin: 8px 0; font-size: 16px; }
+  label { font-weight: bold; font-size: 16px; }
+  
+  #certificate { 
+    width: 750px; margin: 30px auto; border: 1px solid #333; padding: 40px; background: white;
+  }
+  .gov-logo { text-align: center; margin-bottom: 10px; }
+  .dept-name { text-align: center; font-weight: bold; font-size: 18px; }
+  .office-name { text-align: center; font-weight: bold; font-size: 20px; margin: 10px 0; text-decoration: underline; }
+  
+  .header-info { display: flex; justify-content: space-between; font-weight: bold; margin-top: 20px; }
+  .cert-title { text-align: center; margin: 20px 0; }
+  .cert-title span { border: 1px solid #000; padding: 8px 20px; border-radius: 10px; font-weight: bold; font-size: 20px; }
+  
+  .body-text { line-height: 2.2; font-size: 17px; text-align: justify; }
+  
+  .footer-section { display: flex; justify-content: space-between; margin-top: 40px; align-items: flex-end; }
+  .footer-left { line-height: 1.8; }
+  .footer-right { text-align: center; width: 300px; }
+  .sign-box { border: 1px dashed #ccc; padding: 20px; color: #800000; font-weight: bold; }
+
+  @media print {
+    .no-print { display: none; }
+    #certificate { border: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="no-print">
+  <div class="creator-name">"ರಚನೆ: ಮನೋಹರ್ ಆರ್ ಕೆಜಿಎಫ್" (Created by Manohar R KGF) ಈ ಕೆಳಗಿನ ಅಂಶಗಳನ್ನು ನಮೂದಿಸಿ..ನಿಮ್ಮ
+ಸೇವಾ ಪ್ರಮಾಣ ಪತ್ರ ಡೌನ್ಲೋಡ್ ಮಾಡಿ ಕೆಳಗಿನ ಲೇಔಟ್ ನಂತೆ  ಪ್ರಿಂಟ್ ಬರುತ್ತದೆ,  </div>
+  <h3>ವಿವರಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ:</h3>
+  <label>ಕ್ಷೇತ್ರ ಶಿಕ್ಷಣಾಧಿಕಾರಿಗಳ ಕಾರ್ಯಾಲಯದ ಹೆಸರು ಮಾತ್ರ ಟೈಪ್‌ ಮಾಡಿ:</label>
+  <input type="text" id="in_office" oninput="updateCert()">
+  
+  <input type="text" id="in_name" placeholder=" ನೌಕರರ ಹೆಸರು:" oninput="updateCert()">
+  
+  <label>ನೇಮಕಗೊಂಡ ಶಾಲೆ:</label>
+  <input type="text" id="in_school1" oninput="updateCert()">
+  <label>ಸೇವೆಗೆ ಸೇರಿದ ದಿನಾಂಕ:</label>
+  <input type="date" id="in_date1" oninput="updateCert()">
+  
+  <label>ಪ್ರಸ್ತುತ ಶಾಲೆ:</label>
+  <input type="text" id="in_school2" oninput="updateCert()">
+  <label>ಈ ಶಾಲೆಗೆ ಬಂದ ದಿನಾಂಕ:</label>
+  <input type="date" id="in_date2" oninput="updateCert()">
+  
+  <label>ಕೆಜಿಐಡಿ ಸಂಖ್ಯೆ:</label>
+  <input type="text" id="in_kgid" oninput="updateCert()">
+  <label>ಜನ್ಮ ದಿನಾಂಕ:</label>
+  <input type="date" id="in_dob" oninput="updateCert()">
+  
+  <input type="text" id="in_place" placeholder="ಸ್ಥಳ:" oninput="updateCert()">
+  <br><br>
+  <button onclick="window.print()" style="padding: 15px 30px; font-size: 18px; background: #28a745; color: white; border: none; cursor: pointer;">ಪ್ರಿಂಟ್ ಮಾಡಿ</button>
+  <button onclick="downloadPDF()" style="padding: 15px 30px; font-size: 18px; background: #007bff; color: white; border: none; cursor: pointer;">PDF ಡೌನ್‌ಲೋಡ್</button>
+</div>
+
+<div id="certificate">
+  <div class="gov-logo">ಕರ್ನಾಟಕ ಸರ್ಕಾರ</div>
+  <div class="dept-name">ಶಾಲಾ ಶಿಕ್ಷಣ ಇಲಾಖೆ</div>
+  <div class="office-name">ಕ್ಷೇತ್ರ ಶಿಕ್ಷಣಾಧಿಕಾರಿಗಳ ಕಾರ್ಯಾಲಯ <span id="out_office">__________</span></div>
+  
+  <div class="header-info">
+    <div>ಸಂಖ್ಯೆ: __________ — ನೇ.ಪ್ರ.</div>
+    <div>ದಿನಾಂಕ: __________</div>
+  </div>
+  
+  <div class="cert-title"><span>ಸೇವಾ ಪ್ರಮಾಣ ಪತ್ರ</span></div>
+  
+  <div class="body-text">
+    ಈ ಮೂಲಕ ದೃಢೀಕರಿಸುವುದೇನೆಂದರೆ ಶ್ರೀ/ಶ್ರೀಮತಿ <b><span id="out_name">__________</span></b> ಇವರು ದಿನಾಂಕ <b><span id="out_date1">__________</span></b> ರಂದು <b><span id="out_school1">__________</span></b> ಇಲ್ಲಿ ಸರ್ಕಾರಿ ಪ್ರಾಥಮಿಕ/ಪ್ರೌಢಶಾಲಾ ಸಹ ಶಿಕ್ಷಕರಾಗಿ/ಶಿಕ್ಷಕಿಯಾಗಿ ನೇಮಕಗೊಂಡು ದಿನಾಂಕ <b><span id="out_date2">__________</span></b> ರಿಂದ ಇಲ್ಲಿಯವರೆಗೆ <b><span id="out_school2">__________</span></b> ಶಾಲೆಯಲ್ಲಿ ಸಹ ಶಿಕ್ಷಕರಾಗಿ/ಶಿಕ್ಷಕಿಯಾಗಿ ಸೇವೆಯನ್ನು ಸಲ್ಲಿಸುತ್ತಿದ್ದಾರೆ. ಸದರಿ ಪ್ರಮಾಣ ಪತ್ರವನ್ನು ಅವರ ಸೇವಾ ಪುಸ್ತಕದ ಆಧಾರದ ಮೇಲೆ ನೀಡಲಾಗಿದೆ.
+  </div>
+
+  <div class="footer-section">
+    <div class="footer-left">
+      <div>ಕೆಜಿಐಡಿ ಸಂಖ್ಯೆ: <span id="out_kgid">__________</span></div>
+      <div>ಜನ್ಮ ದಿನಾಂಕ: <span id="out_dob">__________</span></div>
+      <br>
+      <div>ಸ್ಥಳ: <span id="out_place">__________</span></div>
+    </div>
+    <div class="footer-right">
+      <div>Sd/-</div>
+      <div class="sign-box">ಕ್ಷೇತ್ರ ಶಿಕ್ಷಣಾಧಿಕಾರಿಗಳ ಕಾರ್ಯಾಲಯ</div>
+    </div>
+  </div>
+</div>
+
+<script>
+function formatDate(dateString) {
+  if (!dateString) return "__________";
+  const [year, month, day] = dateString.split('-');
+  return `${day}-${month}-${year}`;
+}
+
+function updateCert() {
+  document.getElementById('out_office').innerText = document.getElementById('in_office').value || "__________";
+  document.getElementById('out_name').innerText = document.getElementById('in_name').value || "__________";
+  document.getElementById('out_school1').innerText = document.getElementById('in_school1').value || "__________";
+  document.getElementById('out_school2').innerText = document.getElementById('in_school2').value || "__________";
+  document.getElementById('out_kgid').innerText = document.getElementById('in_kgid').value || "__________";
+  document.getElementById('out_place').innerText = document.getElementById('in_place').value || "__________";
+  document.getElementById('out_date1').innerText = formatDate(document.getElementById('in_date1').value);
+  document.getElementById('out_date2').innerText = formatDate(document.getElementById('in_date2').value);
+  document.getElementById('out_dob').innerText = formatDate(document.getElementById('in_dob').value);
+}
+
+// PDF ಡೌನ್‌ಲೋಡ್ ಫಂಕ್ಷನ್
+function downloadPDF() {
+  const element = document.getElementById('certificate');
+  html2pdf().from(element).save('Seva_Pramana_Patra.pdf');
+}
+</script>
+
+</body>
+</html>
