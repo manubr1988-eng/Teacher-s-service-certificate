@@ -13,7 +13,9 @@
   #certificate { 
     width: 750px; margin: 30px auto; border: 1px solid #333; padding: 40px; background: white;
   }
-  .gov-logo { text-align: center; margin-bottom: 10px; }
+  /* ಲೋಗೋ ಮತ್ತು ಹೆಡರ್ ಸ್ಟೈಲ್ */
+  .gov-logo-container { text-align: center; margin-bottom: 10px; }
+  .gov-logo-container img { width: 80px; height: auto; display: block; margin: 5px auto; }
   .dept-name { text-align: center; font-weight: bold; font-size: 18px; }
   .office-name { text-align: center; font-weight: bold; font-size: 20px; margin: 10px 0; text-decoration: underline; }
   
@@ -37,8 +39,7 @@
 <body>
 
 <div class="no-print">
-  <div class="creator-name">"ರಚನೆ: ಮನೋಹರ್ ಆರ್ ಕೆಜಿಎಫ್" (Created by Manohar R KGF) ಈ ಕೆಳಗಿನ ಅಂಶಗಳನ್ನು ನಮೂದಿಸಿ..ನಿಮ್ಮ
-ಸೇವಾ ಪ್ರಮಾಣ ಪತ್ರ ಡೌನ್ಲೋಡ್ ಮಾಡಿ ಕೆಳಗಿನ ಲೇಔಟ್ ನಂತೆ  ಪ್ರಿಂಟ್ ಬರುತ್ತದೆ,  </div>
+  <div class="creator-name">"ರಚನೆ: ಮನೋಹರ್ ಆರ್ ಕೆಜಿಎಫ್" (Created by Manohar R KGF)</div>
   <h3>ವಿವರಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ:</h3>
   <label>ಕ್ಷೇತ್ರ ಶಿಕ್ಷಣಾಧಿಕಾರಿಗಳ ಕಾರ್ಯಾಲಯದ ಹೆಸರು ಮಾತ್ರ ಟೈಪ್‌ ಮಾಡಿ:</label>
   <input type="text" id="in_office" oninput="updateCert()">
@@ -67,12 +68,15 @@
 </div>
 
 <div id="certificate">
-  <div class="gov-logo">ಕರ್ನಾಟಕ ಸರ್ಕಾರ</div>
+  <div class="gov-logo-container">
+    ಕರ್ನಾಟಕ ಸರ್ಕಾರ
+    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d3/Seal_of_Karnataka.png" alt="Seal of Karnataka">
+  </div>
   <div class="dept-name">ಶಾಲಾ ಶಿಕ್ಷಣ ಇಲಾಖೆ</div>
   <div class="office-name">ಕ್ಷೇತ್ರ ಶಿಕ್ಷಣಾಧಿಕಾರಿಗಳ ಕಾರ್ಯಾಲಯ <span id="out_office">__________</span></div>
   
   <div class="header-info">
-    <div>ಸಂಖ್ಯೆ: __________ — ನೇ.ಪ್ರ.</div>
+    <div>ಸಂಖ್ಯೆ: __________</div>
     <div>ದಿನಾಂಕ: __________</div>
   </div>
   
@@ -115,7 +119,6 @@ function updateCert() {
   document.getElementById('out_dob').innerText = formatDate(document.getElementById('in_dob').value);
 }
 
-// PDF ಡೌನ್‌ಲೋಡ್ ಫಂಕ್ಷನ್
 function downloadPDF() {
   const element = document.getElementById('certificate');
   html2pdf().from(element).save('Seva_Pramana_Patra.pdf');
